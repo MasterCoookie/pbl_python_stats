@@ -32,9 +32,8 @@ for dist in distances:
                 print(f)
                 for line in f.readlines():
                     print(line)
-                    if line != '':
-                        if line.strip() == "Timed out!":
-                            timeout_count += 1
+                    if line.strip() == "Timed out!":
+                        timeout_count += 1
 
                 timeouts.append(timeout_count)
 
