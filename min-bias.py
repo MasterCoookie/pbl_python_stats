@@ -9,7 +9,7 @@ def clearData(line):
 
 dalmierze = []
 mbry = []
-# rmsy = []
+rmsy = []
 
 files = os.listdir(os.getcwd() + "\\pomiary_range")
 
@@ -35,13 +35,27 @@ for filename in files: #dla każdego pomiaru dalmirzowego
     rmse = math.sqrt(sigmaKwadrat / n)
     dalmierze.sort()
     mbry.insert(dalmierze.index(wartOczekiwana), mbr)
-    # rmsy.insert(dalmierze.index(wartOczekiwana), rmse)
+    rmsy.insert(dalmierze.index(wartOczekiwana), rmse)
 
 plt.ylabel('mean bias error')
-plt.ylabel('mbe')
-plt.xlabel('odległość')    
+plt.xlabel('distance [m]')    
 plt.plot(dalmierze, mbry, 'g' , label="DW1000 SPGH")
 plotable = get_old_mbe_plotable()
 plt.plot(plotable[0], plotable[1], 'r', label="DW1000")
 plt.legend()
 plt.show()
+
+
+plt.ylabel('root mean square error')
+plt.xlabel('distance [m]')    
+plt.plot(dalmierze, rmsy, 'g' , label="DW1000 SPGH")
+plotable = get_old_mbe_plotable(get_rmsy=True)
+plt.plot(plotable[0], plotable[1], 'r', label="DW1000")
+plt.legend()
+plt.show()
+
+rmsy_avg_dw1000 = (sum(plotable[1]) / len(plotable[1]))
+print(f"AVG RMSY DW1000: {rmsy_avg_dw1000}")
+
+rmsy_avg_dw1000SPGH = (sum(rmsy) / len(rmsy))
+print(f"AVG RMSY DW1000: {rmsy_avg_dw1000SPGH}")

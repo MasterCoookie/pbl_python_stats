@@ -5,11 +5,11 @@ def clearData(line):
     line = re.sub(' m.*', '', line)
     return line
 
-def get_old_mbe_plotable():
+def get_old_mbe_plotable(get_rmsy=False):
 
     dalmierze = []
     mbry = []
-    # rmsy = []
+    rmsy = []
 
     files = os.listdir(os.getcwd() + "\\pomiary_mbe_stare")
 
@@ -35,13 +35,21 @@ def get_old_mbe_plotable():
             rmse = math.sqrt(sigmaKwadrat / n)
             dalmierze.sort()
             mbry.insert(dalmierze.index(wartOczekiwana), mbr)
-    # rmsy.insert(dalmierze.index(wartOczekiwana), rmse)
+            rmsy.insert(dalmierze.index(wartOczekiwana), rmse)
+    if get_rmsy:
+        return(dalmierze, rmsy)
     return (dalmierze, mbry)
 
 if __name__ == '__main__':
     plotable = get_old_mbe_plotable()
-    plt.ylabel('meab bias error')
+    plt.ylabel('mean bias error')
     plt.ylabel('mbe')
+    plt.xlabel('odległość')
+    plt.plot(plotable[0], plotable[1])
+    plt.show()
+
+    plotable = get_old_mbe_plotable(get_rmsy=True)
+    plt.ylabel('root mean square error')
     plt.xlabel('odległość')
     plt.plot(plotable[0], plotable[1])
     plt.show()
