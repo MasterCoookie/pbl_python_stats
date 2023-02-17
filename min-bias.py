@@ -58,4 +58,4 @@ rmsy_avg_dw1000 = (sum(plotable[1]) / len(plotable[1]))
 print(f"AVG RMSY DW1000: {rmsy_avg_dw1000}")
 
 rmsy_avg_dw1000SPGH = (sum(rmsy) / len(rmsy))
-print(f"AVG RMSY DW1000: {rmsy_avg_dw1000SPGH}")
+print(f"AVG RMSY DW1000SPGH: {rmsy_avg_dw1000SPGH}")

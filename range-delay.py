@@ -10,11 +10,13 @@ def clearData(line):
 distances = ["20", "55", "100"]
 
 plt.ylabel("Number of timeouts per 100 frames")
-plt.xlabel("Delay (ms)")
+plt.xlabel("Delay [ms]")
 
 mesurements_path = "\\pomiary\\pomiary"
 
+avg_dict = {}
 for dist in distances:
+    
     dealys = []
     timeouts = []
     mesurements_path_dist = mesurements_path + dist
@@ -25,6 +27,8 @@ for dist in distances:
     for filename in files:
         if "txt" in filename:
             delay= float(re.sub('ms.txt', '', filename)[len(dist) + 1:])
+            if delay not in avg_dict:
+                avg_dict[delay] = 0
             dealys.append(delay)
             path = os.path.join(os.getcwd() + mesurements_path_dist, filename)
             with open(path, 'r') as f:
@@ -34,6 +38,7 @@ for dist in distances:
                     print(line)
                     if line.strip() == "Timed out!":
                         timeout_count += 1
+                        avg_dict[delay] += 1
 
                 timeouts.append(timeout_count)
 
@@ -42,3 +47,7 @@ for dist in distances:
 
 plt.legend()
 plt.show()
+
+
+for delay in avg_dict:
+    print(f"delay {delay} avg lost frames {avg_dict[delay]/(300 + avg_dict[delay])}")
